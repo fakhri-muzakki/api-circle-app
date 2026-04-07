@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String  @id @default(uuid())
+  username     String  @unique
+  fullName     String  @map("full_name")
+  email        String  @unique
+  password     String?
+  photoProfile String? @map("photoProfile")
+  bio          String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  createdBy String? @map("created_by")
+
+  // Relations
+  threads  Thread[]
+  replies  Reply[]
+  likes    Like[]
+  accounts Account[]
+
+  following Following[] @relation("following")
+  followers Following[] @relation("followers")
+
+  @@map("users")
+}
+
+model Following {
+  id String @id @default(uuid())
+
+  followingId String @map("following_id")
+  followerId  String @map("follower_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  following User @relation("following", fields: [followingId], references: [id])
+  follower  User @relation("followers", fields: [followerId], references: [id])
+
+  @@unique([followingId, followerId]) // mencegah duplicate follow
+}
+
+model Thread {
+  id      String  @id @default(uuid())
+  image   String?
+  content String
+
+  // number_of_replies  Int      @default(0) // ❗ bukan FK, hanya counter
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  createdBy String?  @map("created_by")
+
+  // Relations
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+
+  replies Reply[]
+  likes   Like[]
+
+  @@map("threads")
+}
+
+model Reply {
+  id String @id @default(uuid())
+
+  userId   String @map("user_id")
+  threadId String @map("thread_id")
+
+  image   String?
+  content String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  createdBy String?  @map("created_by")
+
+  // Relations
+  user   User   @relation(fields: [userId], references: [id])
+  thread Thread @relation(fields: [threadId], references: [id])
+
+  @@map("replies")
+}
+
+model Like {
+  id String @id @default(uuid())
+
+  userId   String @map("user_id")
+  threadId String @map("thread_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  createdBy String?  @map("created_by")
+
+  // Relations
+  user   User   @relation(fields: [userId], references: [id])
+  thread Thread @relation(fields: [threadId], references: [id])
+
+  @@unique([userId, threadId]) // 1 user hanya bisa like 1x
+  @@map("likes")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  provider          String // "google" | "github"
+  providerAccountId String // ID user di sisi provider
+  accessToken       String?
+  refreshToken      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId]) // satu akun per provider
+}
