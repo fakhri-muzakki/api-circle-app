@@ -25,6 +25,11 @@ export const getUsers = async (
     const users = await prisma.user.findMany({
       where: {
         id: { not: user.id },
+        NOT: {
+          following: {
+            some: { followerId: user.id },
+          },
+        },
       },
       take: take + 1, // ambil 1 lebih untuk deteksi hasNextPage
       ...(cursor && {
