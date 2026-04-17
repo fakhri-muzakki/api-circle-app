@@ -1,7 +1,7 @@
 import { type Request, type Response, type NextFunction } from 'express';
 import prisma from '../../config/prisma';
 import { AppError } from '../../shared/errors/AppError';
-import type { Prisma } from '../../generated/prisma';
+import type { Prisma } from '@prisma/client';
 
 interface LikeBody {
   userId: string;

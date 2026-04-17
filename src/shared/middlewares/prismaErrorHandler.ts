@@ -1,7 +1,8 @@
 import {
   PrismaClientKnownRequestError,
   PrismaClientValidationError,
-} from '../../generated/prisma/runtime/library';
+  // } from '../../generated/prisma/runtime/library';
+} from '@prisma/client/runtime/library.js';
 
 interface PrismaErrorResponse {
   statusCode: number;

@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  // output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -60,8 +60,6 @@ model Thread {
   id      String  @id
   image   String?
   content String
-
-  // number_of_replies  Int      @default(0) // ❗ bukan FK, hanya counter
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

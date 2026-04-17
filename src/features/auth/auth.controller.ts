@@ -5,7 +5,7 @@ import env from '../../config/env';
 import jwt from 'jsonwebtoken';
 import ms from 'ms';
 import { AppError } from '../../shared/errors/AppError';
-import type { User } from '../../generated/prisma/client';
+import type { User } from '@prisma/client';
 
 export const register = async (
   req: Request,

@@ -12,6 +12,5 @@ router.get('/', verifyToken, getTheads);
 router.post('/', verifyToken, upload.single('image'), createThread);
 
 router.get('/:id', verifyToken, getThreadWithRepliesByid);
-// router.post('/', verifyToken, upload.single('image'), createThread);
 
 export default router;

@@ -20,6 +20,9 @@ export const getTheads = async (
     }
 
     const threads = await prisma.thread.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
       include: {
         user: {
           select: {
