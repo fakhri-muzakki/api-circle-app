@@ -1,10 +1,17 @@
 import 'dotenv/config';
 import app from './app';
+import { createServer } from 'http';
+import { initSocket } from './config/socket';
 
 const PORT = process.env.PORT || 3000;
 
+const httpServer = createServer(app);
+
+// Init socket.io — attach ke httpServer
+initSocket(httpServer);
+
 // Start server
-const server = app.listen(PORT, () => {
+const server = httpServer.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
   console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}`);
 });

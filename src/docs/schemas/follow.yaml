@@ -1,0 +1,64 @@
+components:
+  schemas:
+
+
+
+
+    
+  
+    CreateFollowRequest:
+      type: object
+      required:
+        - followerId
+        - followingId
+      properties:
+        followerId:
+          type: string
+          format: uuid
+          example: "1d8dd0e7-5059-455b-a637-981e054bd02b"
+        followingId:
+          type: string
+          format: uuid
+          example: "78b3cf98-82fc-4f6b-96e8-318307001005"
+
+    Follow:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        followingId:
+          type: string
+          format: uuid
+        followerId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateFollowResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Created follow successfully"
+        data:
+          $ref: '#/components/schemas/Follow'
+  
+    
+    DeleteFollowResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Deleted follow successfully"

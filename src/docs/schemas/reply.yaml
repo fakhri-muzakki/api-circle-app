@@ -1,0 +1,50 @@
+components:
+  schemas:
+    CreateReplyRequest:
+      type: object
+      required:
+        - threadId
+        - content
+      properties:
+        threadId:
+          type: string
+          format: uuid
+          example: "019d8ab5-316b-7ed3-86f7-af4ab53f2e7f"
+        content:
+          type: string
+          example: "test 123"
+        image:
+          type: string
+          format: binary
+          nullable: true
+
+    Reply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        avatar:
+          type: string
+          nullable: true
+        image:
+          type: string
+          nullable: true
+        username:
+          type: string
+        name:
+          type: string
+        content:
+          type: string
+
+    CreateReplyResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Created reply successfully"
+        data:
+          $ref: '#/components/schemas/Reply'

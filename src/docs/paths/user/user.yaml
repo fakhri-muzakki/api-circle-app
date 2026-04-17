@@ -1,0 +1,17 @@
+paths:
+  /api/users:
+    get:
+      summary: Get all users
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Get users successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUsersResponse'
+        401:
+          description: Unauthorized (missing or invalid token)

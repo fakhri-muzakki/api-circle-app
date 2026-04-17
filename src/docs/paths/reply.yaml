@@ -1,0 +1,32 @@
+paths:
+  /api/replies:
+    post:
+      summary: Create reply
+      tags:
+        - Replies
+      security:
+        - bearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateReplyRequest'
+
+      responses:
+        201:
+          description: Created reply successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateReplyResponse'
+
+        400:
+          description: Bad request
+
+        401:
+          description: Unauthorized
+
+        404:
+          description: Thread not found

@@ -57,7 +57,7 @@ model Following {
 }
 
 model Thread {
-  id      String  @id @default(uuid())
+  id      String  @id
   image   String?
   content String
 

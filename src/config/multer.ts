@@ -1,6 +1,7 @@
 import multer from 'multer';
+import path from 'path';
 
-export const upload = multer({
+export const uploadToBuffer = multer({
   storage: multer.memoryStorage(),
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB
@@ -13,3 +14,17 @@ export const upload = multer({
     cb(null, true);
   },
 });
+// ==========================================
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(process.cwd(), 'src/public/uploads'));
+  },
+  filename: (req, file, cb) => {
+    const fileName = file.originalname.replace(/\s+/g, '-');
+    const uniqueName = `${Date.now()}-${fileName}`;
+    cb(null, uniqueName);
+  },
+});
+
+export const upload = multer({ storage });

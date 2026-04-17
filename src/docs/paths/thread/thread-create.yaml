@@ -1,0 +1,29 @@
+paths:
+  /api/threads:
+    post:
+      summary: Create thread
+      tags:
+        - Threads
+      security:
+        - bearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateThreadRequest'
+
+      responses:
+        201:
+          description: Created thread successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateThreadResponse'
+
+        400:
+          description: Bad request
+
+        401:
+          description: Unauthorized

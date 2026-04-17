@@ -1,0 +1,32 @@
+paths:
+  /api/users/{id}:
+    get:
+      summary: Get user by ID
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID (UUID)
+          schema:
+            type: string
+            format: uuid
+            example: "0ddf4dbc-045c-46d3-aaaf-05fbba28a234"
+
+      responses:
+        200:
+          description: Fetched user successfully
+          content:
+            application/json:
+              schema:
+              $ref: '#/components/schemas/GetUsersResponse'
+
+        401:
+          description: Unauthorized
+
+        404:
+          description: User not found

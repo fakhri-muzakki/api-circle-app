@@ -1,0 +1,41 @@
+paths:
+  /api/users/{id}:
+    put:
+      summary: Update user profile
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "0ddf4dbc-045c-46d3-aaaf-05fbba28a234"
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+
+      responses:
+        200:
+          description: Updated user profile successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserResponse'
+
+        400:
+          description: Bad request
+
+        401:
+          description: Unauthorized
+
+        404:
+          description: User not found

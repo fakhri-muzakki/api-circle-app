@@ -1,0 +1,97 @@
+components:
+  schemas:
+    RegisterRequest:
+      type: object
+      required:
+        - email
+        - password
+        - fullName
+        - username
+      properties:
+        email:
+          type: string
+          example: "kiko@gmail.com"
+        password:
+          type: string
+          example: "Fakhri123$$"
+        fullName:
+          type: string
+          example: "kiko12"
+        username:
+          type: string
+          example: "kikotea"
+
+    RegisterUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        fullName:
+          type: string
+        email:
+          type: string
+        photoProfile:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+          nullable: true
+
+    RegisterResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "berhasil"
+        data:
+          $ref: '#/components/schemas/RegisterUser'
+          
+    
+    LogoutResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Logged out successfully"
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string

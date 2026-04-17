@@ -1,0 +1,31 @@
+paths:
+  /api/users/search:
+    get:
+      summary: Search users
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Keyword for searching users (username or name)
+          schema:
+            type: string
+            example: "nawir"
+
+      responses:
+        200:
+          description: Search user successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchUsersResponse'
+
+        400:
+          description: Bad request (missing query param)
+
+        401:
+          description: Unauthorized

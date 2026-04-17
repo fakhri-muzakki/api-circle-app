@@ -1,0 +1,32 @@
+paths:
+  /api/likes:
+    post:
+      summary: Like a thread
+      tags:
+        - Likes
+      security:
+        - bearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LikeRequest'
+
+      responses:
+        201:
+          description: Like thread successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LikeResponse'
+
+        400:
+          description: Bad request
+
+        401:
+          description: Unauthorized
+
+        404:
+          description: Thread not found

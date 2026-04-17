@@ -1,0 +1,19 @@
+paths:
+  /api/auth/logout:
+    get:
+      summary: Logout user
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+
+      responses:
+        200:
+          description: Logged out successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogoutResponse'
+
+        401:
+          description: Unauthorized

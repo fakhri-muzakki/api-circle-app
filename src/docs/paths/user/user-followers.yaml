@@ -1,0 +1,30 @@
+paths:
+  /api/users/{username}/followers:
+    get:
+      summary: Get user followers
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "nawir"
+
+      responses:
+        200:
+          description: Fetched user following successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserFollowersResponse'
+
+        401:
+          description: Unauthorized
+
+        404:
+          description: User not found

@@ -38,7 +38,7 @@ export const register = async (
       },
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
       message: 'berhasil',
       data: user,
@@ -57,7 +57,24 @@ export const login = async (
   const { email, password } = req.body;
 
   try {
-    const user = await prisma.user.findFirst({ where: { email } });
+    const user = await prisma.user.findFirst({
+      where: { email },
+      select: {
+        id: true,
+        username: true,
+        password: true,
+        email: true,
+        photoProfile: true,
+        bio: true,
+        fullName: true,
+        _count: {
+          select: {
+            followers: true,
+            following: true,
+          },
+        },
+      },
+    });
     if (!user) throw new AppError('User is not found', 404);
 
     if (!user.password) {
@@ -95,8 +112,14 @@ export const login = async (
         id: user.id,
         username: user.username,
         email: user.email,
+        avatar: user.photoProfile,
+        name: user.fullName,
         accessToken,
+        bio: user.bio,
+        followers: user._count.following,
+        following: user._count.followers,
       },
+      // data: user,
     });
   } catch (error) {
     console.log(error);
@@ -134,16 +157,20 @@ export const callbackGooleAndGithub = async (
 ) => {
   try {
     const user = req.user as User;
-    const token = jwt.sign({ userId: user.id }, env.accessTokenSecret, {
-      expiresIn: '7d',
-    });
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      env.accessTokenSecret,
+      {
+        expiresIn: '7d',
+      }
+    );
 
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
     });
     return res.redirect(
-      `http://localhost:5173/oauth-success?token=${token}&user-id=${user.id}`
+      `${process.env.FRONTEND_URL}/oauth-success?token=${token}&user-id=${user.id}`
     );
   } catch (error) {
     next(error);

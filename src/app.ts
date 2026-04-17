@@ -10,14 +10,24 @@ import './config/passport';
 // Import middleware
 import { notFound, errorHandler } from './shared/middlewares';
 import router from './router';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './docs/swagger';
 
 const app = express();
+
+// Swagger route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// const httpServer = createServer(app);
+
+// // Init socket.io — attach ke httpServer
+// initSocket(httpServer);
 
 // Security middleware
 // app.use(helmet());
 app.use(
   cors({
-    origin: 'http://localhost:5173', // frontend kamu
+    origin: process.env.FRONTEND_URL, // frontend kamu
     credentials: true, // kalau pakai cookie / auth
   })
 );

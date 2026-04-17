@@ -1,0 +1,261 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "0ddf4dbc-045c-46d3-aaaf-05fbba28a234"
+        username:
+          type: string
+          example: "kingg"
+        name:
+          type: string
+          example: "King fadhlan"
+        avatar:
+          type: string
+          nullable: true
+          example: null
+        bio:
+          type: string
+          nullable: true
+          example: null
+        isFollowing:
+          type: boolean
+          example: true
+
+    UserDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "0ddf4dbc-045c-46d3-aaaf-05fbba28a234"
+        username:
+          type: string
+          example: "kingg"
+        name:
+          type: string
+          example: "King fadhlan"
+        email:
+          type: string
+          example: "fadhlan@gmail.com"
+        avatar:
+          type: string
+          nullable: true
+          example: null
+        bio:
+          type: string
+          nullable: true
+          example: null
+        followers:
+          type: integer
+          example: 2
+        following:
+          type: integer
+          example: 1
+
+    SearchUsersResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "search user successfully"
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    
+    Thread:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Nawir"
+        username:
+          type: string
+          example: "nawir"
+        avatar:
+          type: string
+          nullable: true
+        time:
+          type: string
+          example: "5 hours ago"
+        image:
+          type: string
+          nullable: true
+        content:
+          type: string
+          example: "Test 123 $$"
+        likes:
+          type: integer
+          example: 0
+        comments:
+          type: integer
+          example: 1
+        isLiked:
+          type: boolean
+          example: false
+
+    UserWithThreads:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        username:
+          type: string
+        avatar:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        following:
+          type: integer
+          example: 2
+        followers:
+          type: integer
+          example: 3
+        isFollowing:
+          type: boolean
+          example: false
+        threads:
+          type: array
+          items:
+            $ref: '#/components/schemas/Thread'
+
+    GetUserThreadsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Fetched threads successfully"
+        data:
+          $ref: '#/components/schemas/UserWithThreads'
+    
+    GetUserFollowersResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Fetched user following successfully"
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    
+    UpdateUserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: "kingg"
+        fullName:
+          type: string
+          example: "fadhlan"
+        email:
+          type: string
+          example: "fadhlan@gmail.com"
+        password:
+          type: string
+          example: "password123"
+        photoProfile:
+          type: string
+          nullable: true
+          example: null
+        bio:
+          type: string
+          nullable: true
+          example: null
+
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        fullName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        photoProfile:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+          nullable: true
+
+    UpdateUserResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Updated user profile successfully"
+        data:
+          $ref: '#/components/schemas/UserProfile'
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    GetUsersResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Get users successfully"
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        nextCursor:
+          type: string
+          nullable: true
+          example: "17"

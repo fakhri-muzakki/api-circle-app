@@ -1,0 +1,263 @@
+components:
+  schemas:
+    ThreadItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "019d8aac-6085-7c55-bb86-46d3fb232e7b"
+        name:
+          type: string
+          example: "Nawir"
+        username:
+          type: string
+          example: "nawir"
+        avatar:
+          type: string
+          nullable: true
+        image:
+          type: string
+          nullable: true
+        time:
+          type: string
+          example: "5 hours ago"
+        content:
+          type: string
+          example: "Test 123 $$"
+        likes:
+          type: integer
+          example: 1
+        comments:
+          type: integer
+          example: 1
+        isLiked:
+          type: boolean
+          example: true
+
+    ThreadUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        fullName:
+          type: string
+        email:
+          type: string
+        photoProfile:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+          nullable: true
+
+    ThreadReply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        content:
+          type: string
+        image:
+          type: string
+          nullable: true
+        username:
+          type: string
+        name:
+          type: string
+        avatar:
+          type: string
+          nullable: true
+
+    ThreadDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        image:
+          type: string
+          nullable: true
+        content:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+          nullable: true
+        userId:
+          type: string
+          format: uuid
+        user:
+          $ref: '#/components/schemas/ThreadUser'
+        isLiked:
+          type: boolean
+        likes:
+          type: integer
+        comments:
+          type: integer
+        time:
+          type: string
+        avatar:
+          type: string
+          nullable: true
+        name:
+          type: string
+        username:
+          type: string
+        replies:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThreadReply'
+
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: "nawir@gmail.com"
+        password:
+          type: string
+          example: "Fakhri123$$"
+
+    AuthUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+        avatar:
+          type: string
+          nullable: true
+        name:
+          type: string
+        accessToken:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIs..."
+        bio:
+          type: string
+          nullable: true
+        followers:
+          type: integer
+        following:
+          type: integer
+
+    LoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Login successfully"
+        data:
+          $ref: '#/components/schemas/AuthUser'
+    
+    
+    CreateThreadRequest:
+      type: object
+      required:
+        - content
+      properties:
+        content:
+          type: string
+          example: "test123"
+        image:
+          type: string
+          format: binary
+          nullable: true
+
+    ThreadCreateData:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        image:
+          type: string
+          nullable: true
+        content:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+          nullable: true
+        userId:
+          type: string
+          format: uuid
+
+    CreateThreadResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Created thread successfully"
+        data:
+          $ref: '#/components/schemas/ThreadCreateData'
+    
+    
+    
+    
+    
+    
+    
+    
+    GetThreadDetailResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Fetched thread with replies successfully"
+        data:
+          $ref: '#/components/schemas/ThreadDetail'
+    
+    GetThreadsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Fetched threads successfully"
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThreadItem'

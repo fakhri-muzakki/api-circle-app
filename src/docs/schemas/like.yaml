@@ -1,0 +1,45 @@
+components:
+  schemas:
+    LikeRequest:
+      type: object
+      required:
+        - threadId
+      properties:
+        threadId:
+          type: string
+          format: uuid
+          example: "019d8ab5-316b-7ed3-86f7-af4ab53f2e7f"
+
+    Like:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        threadId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+          nullable: true
+
+    LikeResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Like thread successfully"
+        data:
+          $ref: '#/components/schemas/Like'

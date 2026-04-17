@@ -1,0 +1,19 @@
+paths:
+  /api/threads:
+    get:
+      summary: Get threads
+      tags:
+        - Threads
+      security:
+        - bearerAuth: []
+
+      responses:
+        200:
+          description: Fetched threads successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetThreadsResponse'
+
+        401:
+          description: Unauthorized

@@ -1,0 +1,30 @@
+paths:
+  /api/users/{username}/threads:
+    get:
+      summary: Get user threads
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "nawir"
+
+      responses:
+        200:
+          description: Fetched threads successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserThreadsResponse'
+
+        401:
+          description: Unauthorized
+
+        404:
+          description: User not found

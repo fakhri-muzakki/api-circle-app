@@ -1,0 +1,27 @@
+paths:
+  /api/auth/register:
+    post:
+      summary: Register user
+      tags:
+        - Auth
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+
+      responses:
+        201:
+          description: Register successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+
+        400:
+          description: Bad request
+
+        409:
+          description: Email or username already exists
